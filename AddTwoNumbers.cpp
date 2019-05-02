@@ -9,8 +9,8 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int first = 0;
-        int second = 0;
+        unsigned int first = 0;
+        unsigned int second = 0;
         // when l1 is NOT empty
         int digit = 0;
         while(l1){
@@ -22,11 +22,11 @@ public:
         digit = 0;
         // go thru l2
         while(l2){
-            first += l2->val * pow(10, digit);
+            second += l2->val * pow(10, digit);
             l2 = l2->next;
             ++digit;
         }
-        int result = first + second;
+        unsigned int result = first + second;
         // get the reverse digits of result
         int rem = 0;
         rem = result % 10;
