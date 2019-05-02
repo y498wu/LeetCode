@@ -28,13 +28,17 @@ public:
         }
         int result = first + second;
         // get the reverse digits of result
-        ListNode* resultNode;
-        int rem;
+        int rem = 0;
+        rem = result % 10;
+        ListNode* resultNode = new ListNode{rem};
+        result /= 10;
+        ListNode* currentNode = resultNode;
         while (result != 0){
             rem = result % 10;
-            resultNode->val = rem;
             result /= 10;
-            resultNode = resultNode->next;
+            ListNode* newNode = new ListNode{rem};
+            currentNode->next = newNode;
+            currentNode = currentNode->next;
         }
         return resultNode;
     }
