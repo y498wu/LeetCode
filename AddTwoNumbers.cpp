@@ -9,37 +9,25 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        unsigned int first = 0;
-        unsigned int second = 0;
-        // when l1 is NOT empty
-        int digit = 0;
-        while(l1){
-            first += l1->val * pow(10, digit);
-            l1 = l1->next;
-            ++digit;
+        ListNode* dummyHead = new ListNode{0};
+        ListNode* p = l1;
+        ListNode* q = l2;
+        ListNode* curr = dummyHead;
+        int carry = 0;
+        int x, y;
+        while (p || q){
+            (p != nullptr) ? x = p->val : x = 0;
+            (q != nullptr) ? y = q->val : y = 0;
+            int sum = carry + x + y;
+            carry = sum / 10;
+            curr->next = new ListNode(sum % 10);
+            curr = curr->next;
+            if (p != nullptr) p = p->next;
+            if (q != nullptr) q = q->next;
         }
-        // reset digit
-        digit = 0;
-        // go thru l2
-        while(l2){
-            second += l2->val * pow(10, digit);
-            l2 = l2->next;
-            ++digit;
+        if (carry > 0) {
+            curr->next = new ListNode(carry);
         }
-        unsigned int result = first + second;
-        // get the reverse digits of result
-        int rem = 0;
-        rem = result % 10;
-        ListNode* resultNode = new ListNode{rem};
-        result /= 10;
-        ListNode* currentNode = resultNode;
-        while (result != 0){
-            rem = result % 10;
-            result /= 10;
-            ListNode* newNode = new ListNode{rem};
-            currentNode->next = newNode;
-            currentNode = currentNode->next;
-        }
-        return resultNode;
+        return dummyHead->next;
     }
 };
