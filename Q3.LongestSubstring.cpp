@@ -11,26 +11,32 @@ public:
         vector<char> cur;
         // store the possible substring to be compared with cur
         vector<char> curCompare;
-        for(int i = 0; i < s.length(); i++){
-            // compare lenCompare and len
-            printVec(cur);
-            printVec(curCompare);
-            cout << cur.size() << " " << curCompare.size() << endl;
-            if(curCompare.size() > cur.size()){
-                cur.clear();
-                cur = curCompare;
-            }
+        int len = 0;
+        for(int k = 0; k < s.length(); k++){
+        for(int i = k; i < s.length(); i++){
             if(curCompare.empty()){
                 curCompare.emplace_back(s[i]);
             } else {
                 for(int j = 0; j < cur.size(); ++j){
-                    if(s[i] == cur[j]){
+                    if(s[i] == curCompare[j]){
                         curCompare.clear();
                     }
                 }
                 curCompare.emplace_back(s[i]);
             }
+            // compare lenCompare and len
+            if(curCompare.size() >= cur.size()){
+                cur.clear();
+                cur = curCompare;
+            }
+            //printVec(cur);
+            //printVec(curCompare);
+            //cout << cur.size() << " " << curCompare.size() << endl;
         }
-        return cur.size();
+            if(cur.size() > len) len = cur.size();
+            cur.clear();
+            curCompare.clear();
+        }
+        return len;
     }
 };
