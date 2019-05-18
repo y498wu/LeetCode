@@ -20,21 +20,71 @@ public:
         } else if (len2 == 0 && !isOdd){
             return (double(nums1[medianPos-1]) + double(nums1[medianPos])) / 2;
         }
-        // 0 if small and large point to both sides
-        // 1 if both point to nums1
-        // 2 if both point to nums2
-        int side = 0;
-        // two pointers point to the first element of two vectors initially
-        vector<int>::iterator small = nums1.begin();
-        vector<int>::iterator large = nums2.begin();
-        count = 1;
+        // 1 if point to nums1
+        // 2 if point to nums2
+        int sideha = 1;
+        int sidehaha = 2;
+        // pos of ha and haha
+        int posha = 0;
+        int poshaha = 0;
+        int count = 1;
         while(1){
-            if (count == medianPos && isOdd){
-                return double(*small);
-            } else if (count == medianPos && !isOdd){
-                return (double(*small) + double(*large)) / 2;
+            // assign values to valha and valhaha
+            int valha, valhaha;
+            if (sideha == 1){
+                valha = nums1[posha];
+            } else if (sideha == 2){
+                valha = nums2[posha];
             }
-            
+            if (sidehaha == 1){
+                valhaha = nums1[poshaha];
+            } else if (sidehaha == 2){
+                valhaha = nums2[poshaha];
+            }
+            cout << valha << valhaha << endl;
+            // return the correct answer
+            if (count == medianPos && isOdd){
+                return min(double(valha), double(valhaha));
+            } else if (count == medianPos && !isOdd){
+                return (double(valha) + double(valhaha)) / 2;
+            }
+            ++count;
+            // compare valha and valhaha
+            if (valha <= valhaha){
+                if (sideha == 1 && posha == len1-1){
+                    sideha = 2;
+                    posha = poshaha+1;
+                } else if (sideha == 2 && posha == len2-1){
+                    sideha = 1;
+                    posha = poshaha+1;
+                } else if (sidehaha == 1 && poshaha == len1-1){
+                    sideha = 2;
+                    posha = posha+1;
+                } else if (sidehaha == 2 && poshaha == len2-1){
+                    sideha = 1;
+                    posha = posha+1;
+                } else {
+                    sideha = sidehaha;
+                    posha = poshaha+1;
+                }
+            } else {
+                if (sidehaha == 1 && poshaha == len1-1){
+                    sidehaha = 2;
+                    poshaha = posha+1;
+                } else if (sidehaha == 2 && poshaha == len2-1){
+                    sidehaha = 1;
+                    poshaha = posha+1;
+                } else if (sideha == 1 && posha == len1-1){
+                    sidehaha = 2;
+                    poshaha = poshaha+1;
+                } else if (sideha == 2 && posha == len2-1){
+                    sidehaha = 1;
+                    poshaha = poshaha+1;
+                } else {
+                    sidehaha = sideha;
+                    poshaha = posha+1;
+                }
+            }
         }
     }
 };
