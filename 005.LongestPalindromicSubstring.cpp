@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool isValid(string s, int start, int end){
+    bool isValid(string& s, int start, int end){
         int half = (end-start)/2;
         for(int i = 0; i <= half; ++i){
             if(s[start+i] != s[end-i]) return false;
