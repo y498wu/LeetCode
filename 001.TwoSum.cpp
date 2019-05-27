@@ -1,15 +1,21 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        vector<int> result{100, 100};
-        for (int i = 0; i < nums.size() - 1; ++i){
-            for (int j = i+1; j < nums.size(); ++j){
-                if (nums[i] + nums[j] == target){
-                    result[0] = i;
-                    result[1] = j;
-                }
+        int i = 0, n = nums.size();
+        unordered_map<int, int> m;
+        vector<int> ret;
+        
+        for (i = 0; i < n; ++i)
+        {
+            if (m.find(target - nums[i]) != m.end()) // which means key&value are found
+            {
+                ret.push_back(m[target - nums[i]]);
+                ret.push_back(i);
+                break;
             }
+            m[nums[i]] = i;
         }
-        return result;
+        
+        return ret;
     }
 };
