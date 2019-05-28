@@ -1,25 +1,25 @@
 class Solution {
 public:
-    bool isUnique(string s, int start, int end){
-        int len = s.length();
-        for(int i = start; i < end; ++i){
-            for(int j = i+1; j < end+1; ++j){
-                if(s[i] == s[j]) return false;
-            }
-        }
-        return true;
-    }
     int lengthOfLongestSubstring(string s) {
+        // create a character dictionary
+        vector<int> dict (256, -1);
         int len = s.length();
         int maxlen = 0;
+        int start = -1;
+        // iterate through string s
+        int charPos = 0;
         for(int i = 0; i < len; ++i){
-            for(int j = i; j < len; ++j){
-                if(!isUnique(s, i, j)){
-                    break;
-                } else {
-                    maxlen = max(maxlen, j-i+1);
-                }
+            charPos = (int)s[i];
+            // consider the case when we get a repetitive char
+            if(dict[charPos] > start){
+                // replace start pos with the last pos that this char shows up
+                start = dict[charPos];
             }
+            // replace the char's corresponding stored pos with i
+            dict[charPos] = i;
+            // update maxlen if the length of chars from start(not included) to i(included)
+            // is larger than the original maxlen
+            maxlen = max(maxlen, i-start);
         }
         return maxlen;
     }
