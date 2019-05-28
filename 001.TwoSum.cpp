@@ -1,21 +1,24 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        int i = 0, n = nums.size();
-        unordered_map<int, int> m;
-        vector<int> ret;
-        
-        for (i = 0; i < n; ++i)
-        {
-            if (m.find(target - nums[i]) != m.end()) // which means key&value are found
-            {
-                ret.push_back(m[target - nums[i]]);
-                ret.push_back(i);
+        // get nums's length
+        int len = nums.size();
+        // create mapping dictionary and answer vector
+        unordered_map<int, int> dict;
+        vector<int> ans;
+        // iterate through nums
+        for(int i = 0; i < len; ++i){
+            // iterate through dict
+            if(dict.find(target-nums[i]) != dict.end()){
+                // if (target-key) is found in dict, return answer
+                // key: nums[i]
+                // value: i
+                ans.emplace_back(dict[target-nums[i]]);
+                ans.emplace_back(i);
                 break;
             }
-            m[nums[i]] = i;
+            dict[nums[i]] = i;
         }
-        
-        return ret;
+        return ans;
     }
 };
