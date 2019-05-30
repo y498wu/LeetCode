@@ -1,39 +1,21 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        int slen = s.length();
-        if(slen == 0) return "";
         if(numRows == 1) return s;
-        // check how many chars in one round
-        int numRound = 2*numRows-2;
-        // check how many full rounds we'll have
-        int fullRound = slen/numRound;
-        if (slen%numRound) fullRound++;
-        // create a 2D vector to store the chars
-        vector<vector<char>> map(numRows, vector<char>((numRows-1)*fullRound, ' '));
-        // loop for fullRound times
-        int index = 0;
-        for(int i = 0; i < fullRound; ++i){
-            if(index >= slen) break;
-            // first loop per round: the full column
-            for(int j = 0; j < numRows; ++j){
-                if(index >= slen) break;
-                map[j][i*(numRows-1)] = s[index];
-                ++index;
-            }
-            // second loop per round: diagonal line
-            for(int k = numRows-2; k > 0; --k){
-                if(index >= slen) break;
-                map[k][(i+1)*(numRows-1) - k] = s[index];
-                ++index;
-            }
-        }
-        // get the ans string
+        int slen = s.length();
+        // get the number of chars in each round
+        int numRound = 2*numRows -2;
+        
+        // iterate by lines: 0, 1, 2 ... (numRows-1)
         string ans;
-        for(int i = 0; i < map.size(); ++i){
-            for(int j = 0; j < map[i].size(); ++j){\
-                //cout << map[i][j];
-                if(map[i][j] != ' ') ans += map[i][j];
+        for(int i = 0; i < numRows; ++i){
+            // implement by numRound
+            for(int j = 0; i+j < slen; j += numRound){
+                ans += s[i+j];
+                // when it's not the first nor the last row
+                // also the char's position is within the range
+                // the position is: i+j+numRound-2*i = j+numRound-i
+                if(i != 0 && i != numRows-1 && j+numRound-i < slen) ans += s[j+numRound-i];
             }
         }
         return ans;
