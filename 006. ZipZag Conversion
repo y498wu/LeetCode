@@ -1,0 +1,39 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        int slen = s.length();
+        // create a 2D vector to store the chars
+        vector<vector<char>> map;
+        // check how many chars in one round
+        int numRound = 2*numRows-2;
+        // check how many full rounds we'll have
+        int fullRound = slen/numRound;
+        if (slen%numRound) fullRound++;
+        // loop for fullRound times
+        int index = 0;
+        for(int i = 0; i < fullRound; ++i){
+            if(index >= slen) break;
+            // first loop per round: the full column
+            for(int j = 0; j < numRows; ++j){
+                if(index >= slen) break;
+                map[i*(numRows-1)][j] = s[index];
+                ++index;
+            }
+            // second loop per round: diagonal line
+            for(int k = 1; k < numRows-1; ++k){
+                if(index >= slen) break;
+                map[k][numRows-1-k] = s[index];
+                ++index;
+            }
+        }
+        // get the ans string
+        string ans;
+        for(int i = 0; i < map.size(); ++i){
+            for(int j = 0; j < map[i].size(); ++j){
+                if(map[i][j] == ' ') continue;
+                ans += map[i][j];
+            }
+        }
+        return ans;
+    }
+};
