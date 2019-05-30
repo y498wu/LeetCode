@@ -1,6 +1,7 @@
 class Solution {
 public:
     int reverse(int x) {
+        if(x == INT_MIN) return 0;
         // check if x is negative
         bool isNeg = false;
         if(x < 0){
@@ -22,7 +23,8 @@ public:
         int len = tmp.size();
         int ans = 0;
         for(int i = 0; i < len; ++i){
-            cout << tmp[i];
+            cout << tmp[i] << "and" << pow(10, (len-i-1)) << endl;
+            if(tmp[i] * pow(10, (len-i-1)) > INT_MAX) return 0;
             ans += tmp[i] * pow(10, (len-i-1));
         }
         if(isNeg) ans = 0 - ans;
