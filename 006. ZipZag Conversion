@@ -2,13 +2,15 @@ class Solution {
 public:
     string convert(string s, int numRows) {
         int slen = s.length();
-        // create a 2D vector to store the chars
-        vector<vector<char>> map;
+        if(slen == 0) return "";
+        if(numRows == 1) return s;
         // check how many chars in one round
         int numRound = 2*numRows-2;
         // check how many full rounds we'll have
         int fullRound = slen/numRound;
         if (slen%numRound) fullRound++;
+        // create a 2D vector to store the chars
+        vector<vector<char>> map(numRows, vector<char>((numRows-1)*fullRound, ' '));
         // loop for fullRound times
         int index = 0;
         for(int i = 0; i < fullRound; ++i){
@@ -16,22 +18,22 @@ public:
             // first loop per round: the full column
             for(int j = 0; j < numRows; ++j){
                 if(index >= slen) break;
-                map[i*(numRows-1)][j] = s[index];
+                map[j][i*(numRows-1)] = s[index];
                 ++index;
             }
             // second loop per round: diagonal line
-            for(int k = 1; k < numRows-1; ++k){
+            for(int k = numRows-2; k > 0; --k){
                 if(index >= slen) break;
-                map[k][numRows-1-k] = s[index];
+                map[k][(i+1)*(numRows-1) - k] = s[index];
                 ++index;
             }
         }
         // get the ans string
         string ans;
         for(int i = 0; i < map.size(); ++i){
-            for(int j = 0; j < map[i].size(); ++j){
-                if(map[i][j] == ' ') continue;
-                ans += map[i][j];
+            for(int j = 0; j < map[i].size(); ++j){\
+                //cout << map[i][j];
+                if(map[i][j] != ' ') ans += map[i][j];
             }
         }
         return ans;
