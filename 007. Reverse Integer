@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int reverse(int x) {
+        // check if x is negative
+        bool isNeg = false;
+        if(x < 0){
+            x = 0 - x;
+            isNeg = true;
+        }
+        vector<int> tmp;
+        bool isZero = true;
+        while(x > 0){
+            if(x%10 == 0 && isZero){
+                x /= 10;
+                continue;
+            } else {
+                tmp.emplace_back(x%10);
+                x /= 10;
+                isZero = false;
+            }
+        }
+        int len = tmp.size();
+        int ans = 0;
+        for(int i = 0; i < len; ++i){
+            cout << tmp[i];
+            ans += tmp[i] * pow(10, (len-i-1));
+        }
+        if(isNeg) ans = 0 - ans;
+        return ans;
+    }
+};
