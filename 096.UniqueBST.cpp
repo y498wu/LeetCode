@@ -1,13 +1,13 @@
 class Solution {
 public:
-    int numTrees(int n) {
-        if(n == 1) return 1;
-        int ans = 0;
-        for(int i = n-1; i >= n/2; --i){
-            ans += i;
+    int numTrees(int n){
+        vector<int> G (n+1, 0);
+        G[0] = G[1] = 1;
+        for(int i = 2; i <= n; ++i){
+            for(int j = 1; j <= i; ++j){
+                G[i] += G[j-1] * G[i-j];
+            }
         }
-        ans *= 2;
-        if(n%2 == 1) ans -= n/2;
-        return ans;
+        return G[n];
     }
 };
