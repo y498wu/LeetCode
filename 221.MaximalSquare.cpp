@@ -4,7 +4,7 @@ public:
         int m = matrix.size();
         if(m == 0) return 0;
         int n = matrix[0].size();
-        int ans = 1;
+        int ans = 0;
         for(int i = 0; i < m; ++i){
             for(int j = 0; j < n; ++j){
                 if(matrix[i][j] == '1'){
@@ -20,11 +20,10 @@ public:
         while(matrix[i][j+k] == '1' && i+k < m-1 && j+k < n-1){
             ++k;
         }
-        --k;
         if(k == 0) return 1;
         int ans = 1;
-        //cout << "i is " << i << " and j is " << j;
-        //cout << " and k is " << k << endl;
+        cout << "i is " << i << " and j is " << j;
+        cout << " and k is " << k << endl;
         while(k >= 1){
             bool isallone = true;
             for(int a = 1; a <= k; ++a){
