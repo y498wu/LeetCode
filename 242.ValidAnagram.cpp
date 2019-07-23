@@ -2,14 +2,15 @@ class Solution {
 public:
     bool isAnagram(string s, string t) {
         if(s.length() != t.length()) return false;
-        unordered_map<char, int> counts;
         int slen = s.length();
+        int checks[26] = {0};
         for(int i = 0; i < slen; i++){
-            counts[s[i]]++;
-            counts[t[i]]--;
+            checks[s[i]-'a']++;
+            checks[t[i]-'a']--;
         }
-        for(auto count : counts)
-            if(count.second) return false;
+        for(int i = 0; i < 26; ++i){
+            if(checks[i]) return false;
+        }
         return true;
     }
 };
