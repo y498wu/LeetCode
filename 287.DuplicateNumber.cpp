@@ -1,14 +1,11 @@
 class Solution {
 public:
     int findDuplicate(vector<int>& nums) {
-        set<int> ans;
-        for(int i = 0; i < nums.size(); ++i){
-            if(ans.find(nums[i]) != ans.end()){
-                return nums[i];
-            } else {
-                ans.insert(nums[i]);
-            }
-        }
+        unordered_map<int, int> dict;
+        for(auto num : nums)
+            dict[num]++;
+        for(auto check : dict)
+            if(check.second >= 2) return check.first;
         return 0;
     }
 };
