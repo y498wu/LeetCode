@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int minDominoRotations(vector<int>& A, vector<int>& B) {
+        int gsize = A.size();
+        unordered_map<int, vector<int>> check;
+        for(int i = 0; i < gsize; i++){
+            check[A[i]].push_back(i);
+        }
+        for(int i = 0; i < gsize; i++){
+            check[B[i]].push_back(i);
+        }
+        bool found;
+        int res;
+        for(auto it = check.begin(); it != check.end(); it++){
+            found = true;
+            for(int j = 0; j < gsize; j++){
+                if(std::find(it->second.begin(), it->second.end(), j)
+               == it->second.end()){
+                    found = false;
+                }
+            }
+            if(found == true){
+                res = it->first;
+                break;
+            }
+        }
+        if(found == false) return -1;
+        int times = 0;
+        for(int i = 0; i < gsize; i++){
+            if(A[i] == res){
+                times++;
+            }
+        }
+        return(min(times, gsize-times));
+    }
+};
