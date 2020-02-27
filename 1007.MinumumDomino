@@ -10,7 +10,7 @@ public:
             check[B[i]].push_back(i);
         }
         bool found;
-        int res;
+        vector<int> res;
         for(auto it = check.begin(); it != check.end(); it++){
             found = true;
             for(int j = 0; j < gsize; j++){
@@ -20,17 +20,26 @@ public:
                 }
             }
             if(found == true){
-                res = it->first;
-                break;
+                res.push_back(it->first);
             }
         }
-        if(found == false) return -1;
-        int times = 0;
-        for(int i = 0; i < gsize; i++){
-            if(A[i] == res){
-                times++;
+        // if it cannot be done
+        if(res.empty()) return -1;
+        int Atimes, Btimes = 0;
+        int minRes = INT_MAX;
+        for(int i = 0; i < res.size(); i++){
+            Atimes = 0;
+            Btimes = 0;
+            for(int j = 0; j < gsize; j++){
+                if(A[j] == res[i]){
+                    Atimes++;
+                } 
+                if(B[j] == res[i]){
+                    Btimes++;
+                }
             }
+            minRes = min(minRes, min(min(gsize-Atimes, Atimes), min(gsize-Btimes, Btimes)));
         }
-        return(min(times, gsize-times));
+        return minRes;
     }
 };
