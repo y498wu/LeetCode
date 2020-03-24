@@ -1,36 +1,29 @@
 class Solution {
 public:
     string getHint(string secret, string guess) {
-        string s, g;
-        int bulls = 0, cows = 0;
-        for(int i = 0; i < secret.size(); ++i){
-            if(secret[i] == guess[i]){
-                bulls++;
+        // edge case
+        int slen = secret.size(), glen = guess.size();
+        if(slen != glen || slen == 0) return "0A0B";
+        // start
+        int aans = 0, bans = 0;
+        vector<int> acount(10, 0);
+        vector<int> bcount(10, 0);
+        // go through secret and guess
+        char s, g;
+        for(int i = 0; i < slen; ++i){
+            s = secret[i], g = guess[i];
+            if(s == g){
+                ++aans;
             } else {
-                s += secret[i];
-                g += guess[i];
+                ++acount[s-'0'];
+                ++bcount[g-'0'];
             }
         }
-        //cout << "s: " << s << " g: " << g << endl;
-        for(int i = 0; i < s.size(); i++){
-            for(int j = 0; j < g.size(); j++){
-                if(s[i] == g[j]){
-                    cows++;
-                    break;
-                }
-            }
+        // go through two vectors
+        for(int i = 0; i < 10; ++i){
+            bans += min(acount[i], bcount[i]);
         }
-        stringstream test;
-        test << bulls;
-        string bullstr = test.str();
-        stringstream test2;
-        test2 << cows;
-        string cowstr = test2.str();
-        string ans;
-        ans += bullstr;
-        ans += "A";
-        ans += cowstr;
-        ans += "B";
+        string ans = to_string(aans) + "A" + to_string(bans) + "B";
         return ans;
     }
 };
